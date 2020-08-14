@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserService implements UserDAO {
-    Connection connection = ConnectDB.getConnection();
+    private Connection connection = ConnectDB.getConnection();
 
     @Override
     public void create(User user) {
@@ -27,13 +27,39 @@ public class UserService implements UserDAO {
     }
 
     @Override
-    public void read(String login) {
+    public User read(String login) {
+        User user = null;
+        try (PreparedStatement statement = connection.prepareStatement(SQLUser.GET.QUERY)) {
+            statement.setString(1, login);
+            ResultSet resultSet = statement.executeQuery();
 
+            if (resultSet.next()) {
+                user = new User();
+                user.setId(resultSet.getLong("id"));
+                user.setName(resultSet.getString("name"));
+                user.setLogin(resultSet.getString("login"));
+                user.setPassword(resultSet.getString("password"));
+                user.setRole(Role.valueOf(resultSet.getString("role")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return user;
     }
 
     @Override
     public void update(User user) {
+        try (PreparedStatement statement = connection.prepareStatement(SQLUser.UPDATE.QUERY)) {
+            statement.setString(1, user.getName());
+            statement.setString(2, user.getPassword());
+            statement.setString(3, user.getRole().toString());
+            statement.setString(4, user.getLogin());
 
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -72,16 +98,11 @@ public class UserService implements UserDAO {
         return userList;
     }
 
-    @Override
-    public User getById(long id) {
-        return null;
-    }
-
-    enum SQLUser {
-        GET("INSERT"),
+    private enum SQLUser {
+        GET("SELECT * FROM users WHERE login = ?"),
         INSERT("INSERT INTO users (id, name, login, password, role) VALUES (default, ?, ?, ?, ?::users_role)"),
-        DELETE("DELETE FROM users WHERE login = (?)"),
-        UPDATE("UPDATE"),
+        DELETE("DELETE FROM users WHERE login = ?"),
+        UPDATE("UPDATE users SET name = ?, password = ?, role = ?::users_role WHERE login = ?"),
         GETALL("SELECT * FROM users");
 
         String QUERY;

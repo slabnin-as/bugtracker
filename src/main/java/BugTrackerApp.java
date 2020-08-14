@@ -13,11 +13,13 @@ public class BugTrackerApp {
         User user2 = new User("Ivan", "swarj", "avvgnh", Role.MANAGER);
 
         CreateBugtrackerDB db = new CreateBugtrackerDB();
+
         UserService userService = new UserService();
         userService.create(user1);
         userService.create(user2);
-        userService.delete(user2);
-        
+        user2.setPassword("big_dick");
+        user2.setRole(Role.DEVELOPER);
+        userService.update(user2);
 
         List<User> userList = userService.getAll();
 
