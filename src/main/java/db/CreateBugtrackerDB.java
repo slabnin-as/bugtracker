@@ -10,8 +10,8 @@ import java.sql.Statement;
 public class CreateBugtrackerDB {
     public CreateBugtrackerDB() throws IOException, SQLException {
         String sql = new String(Files.readAllBytes(Paths.get("src\\main\\java\\db\\createDB.sql")));
-        Connection db = ConnectDB.getDBConnection();
-        Statement stmt = db.createStatement();
+        Connection conn = ConnectDB.getConnection();
+        Statement stmt = conn.createStatement();
 
         stmt.execute(sql);
     }

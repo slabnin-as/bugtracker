@@ -15,7 +15,7 @@ public class ConnectDB {
 
     }
 
-    public static Connection getDBConnection() {
+    public static Connection getConnection() {
         try {
             if (connection == null) {
                 Class.forName("org.postgresql.Driver");
