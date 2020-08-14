@@ -6,7 +6,12 @@ public enum Role {
     DEVELOPER("Developer");
 
     private String role;
+
     Role(String role){
         this.role = role;
+    }
+
+    public String getName(){
+        return role;
     }
 }
