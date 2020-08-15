@@ -39,5 +39,11 @@ public class BugTrackerApp {
 
         Issue testIssue = issueDAO.read("Тест");
         System.out.println(testIssue);
+
+        testIssue.setTitle("После обновления");
+        testIssue.setAssignee_id(45987L);
+        issueDAO.update(testIssue);
+
+        System.out.println(testIssue);
     }
 }
