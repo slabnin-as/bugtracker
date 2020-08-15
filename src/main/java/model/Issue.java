@@ -1,38 +1,40 @@
 package model;
 
-import jdk.internal.net.http.common.ImmutableSSLSession;
-
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Issue {
-    private long id;
-    private long project_id;
-    private long parent_id;
+    private Long id;
+    private Long project_id;
+    private Long parent_id;
 
     private String title;
     private String description;
 
-    private long reporter_id;
-    private long assignee_id;
+    private Long reporter_id;
+    private Long assignee_id;
 
     private IssueState state;
     private IssueType type;
 
-    private LocalDateTime createDate;
+    private LocalDate createDate;
 
-    public Issue(long project_id, long parent_id, String title, String description, long reporter_id, IssueState state, IssueType type) {
+    public Issue(Long project_id, Long parent_id, String title, String description, long reporter_id, IssueType type) {
         this.project_id = project_id;
         this.parent_id = parent_id;
         this.title = title;
         this.description = description;
         this.reporter_id = reporter_id;
-        this.state = state;
         this.type = type;
-        
-        createDate = LocalDateTime.now();
+
+        state = IssueState.OPEN;
+        createDate = LocalDate.now();
     }
 
-    public long getId() {
+    public Issue(){
+
+    }
+
+    public Long getId() {
         return id;
     }
 
@@ -40,7 +42,7 @@ public class Issue {
         this.id = id;
     }
 
-    public long getProject_id() {
+    public Long getProject_id() {
         return project_id;
     }
 
@@ -48,7 +50,7 @@ public class Issue {
         this.project_id = project_id;
     }
 
-    public long getParent_id() {
+    public Long getParent_id() {
         return parent_id;
     }
 
@@ -72,7 +74,7 @@ public class Issue {
         this.description = description;
     }
 
-    public long getReporter_id() {
+    public Long getReporter_id() {
         return reporter_id;
     }
 
@@ -80,7 +82,7 @@ public class Issue {
         this.reporter_id = reporter_id;
     }
 
-    public long getAssignee_id() {
+    public Long getAssignee_id() {
         return assignee_id;
     }
 
@@ -104,11 +106,27 @@ public class Issue {
         this.type = type;
     }
 
-    public LocalDateTime getCreateDate() {
+    public LocalDate getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(LocalDateTime createDate) {
+    public void setCreateDate(LocalDate createDate) {
         this.createDate = createDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Issue{" +
+                "id=" + id +
+                ", project_id=" + project_id +
+                ", parent_id=" + parent_id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", reporter_id=" + reporter_id +
+                ", assignee_id=" + assignee_id +
+                ", state=" + state +
+                ", type=" + type +
+                ", createDate=" + createDate +
+                '}';
     }
 }

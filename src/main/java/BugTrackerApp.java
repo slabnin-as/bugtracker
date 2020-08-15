@@ -1,5 +1,8 @@
 import dao.DAO;
+import dao.IssueDAO;
 import db.CreateBugtrackerDB;
+import model.Issue;
+import model.IssueType;
 import model.Role;
 import model.User;
 import dao.UserDAO;
@@ -10,24 +13,31 @@ import java.util.List;
 
 public class BugTrackerApp {
     public static void main(String[] args) throws SQLException, IOException {
-        DAO<User, String> dao;
+        DAO<User, String> userDAO = new UserDAO();
+        DAO<Issue, String> issueDAO = new IssueDAO();
+
+        Issue issue = new Issue(1000L,55555L,"Тест", null,10000, IssueType.BUG);
 
         User user1 = new User("Anton", "rainbow", "avvgnh", Role.ADMIN);
         User user2 = new User("Ivan", "swarj", "avvgnh", Role.MANAGER);
 
         CreateBugtrackerDB db = new CreateBugtrackerDB();
 
-        dao = new UserDAO();
-        dao.create(user1);
-        dao.create(user2);
+        userDAO.create(user1);
+        userDAO.create(user2);
         user2.setPassword("big_dick");
         user2.setRole(Role.DEVELOPER);
-        dao.update(user2);
+        userDAO.update(user2);
 
-        List<User> userList = dao.getAll();
+        issueDAO.create(issue);
+
+        List<User> userList = userDAO.getAll();
 
         for(User user : userList){
             System.out.println(user.toString());
         }
+
+        Issue testIssue = issueDAO.read("Тест");
+        System.out.println(testIssue);
     }
 }
