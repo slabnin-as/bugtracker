@@ -134,7 +134,6 @@ public class IssueDAO implements DAO<Issue, String> {
         SQLIssue(String QUERY) {
             this.QUERY = QUERY;
         }
-
     }
 }
 
