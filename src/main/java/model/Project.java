@@ -16,12 +16,12 @@ public class Project {
 
     private LocalDate createDate;
 
-    public Project(String title, String department, Long owner_id, Long admin_id, LocalDate createDate) {
+    public Project(String title, String department, Long owner_id, Long admin_id) {
         this.title = title;
         this.department = department;
         this.owner_id = owner_id;
         this.admin_id = admin_id;
-        this.createDate = createDate;
+        createDate = LocalDate.now();
 
         backlog = new HashMap<>();
         sprint = new HashMap<>();

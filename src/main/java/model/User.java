@@ -68,4 +68,12 @@ public class User {
                 ", role=" + role +
                 '}';
     }
+
+    public void createProject(){
+
+    }
+
+    public void createIssue(){
+
+    }
 }
